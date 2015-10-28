@@ -15,4 +15,16 @@ router.post('/:username', function (req, res, next) {
   });
 });
 
+router.delete('/:username', function (req, res, next) {
+  var username = req.params.username;
+
+  graphDB.deleteUser(username, function (error) {
+    if (error) {
+      res.send(500);
+    } else {
+      res.send(204);
+    }
+  });
+});
+
 module.exports = router;

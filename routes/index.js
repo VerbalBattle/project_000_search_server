@@ -6,7 +6,7 @@ var graphDB = require('../lib/graphDatabase');
 router.post('/:searchterm', function (req, res, next) {
   var partialSearchTerm = req.params.searchterm;
 
-  if (partialSearchTerm === 'newuser') {
+  if (partialSearchTerm === 'newuser' || partialSearchTerm === 'users') {
     res.send('quit trolling us please');
   } else {
     graphDB.getSuggestions(partialSearchTerm, function (error, suggestions) {
