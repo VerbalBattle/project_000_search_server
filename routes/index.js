@@ -1,13 +1,22 @@
 var express = require('express');
 var router = express.Router();
+var graphDB = require('../lib/graphDatabase');
 
-/* GET home page. */
-router.post('/', function(req, res, next) {
-  var partialSearchTerm = req.body.searchterm;
+/* POST index page. */
+router.post('/:searchterm', function (req, res, next) {
+  var partialSearchTerm = req.params.searchterm;
 
-  console.log('yay');
-
-  res.send('nice');
+  if (partialSearchTerm === 'newuser') {
+    res.send('quit trolling us please');
+  } else {
+    graphDB.getSuggestions(partialSearchTerm, function (error, suggestions) {
+      if(error) {
+        res.send(error);
+      } else {
+        res.send(suggestions);
+      }
+    });
+  }
 });
 
 module.exports = router;
