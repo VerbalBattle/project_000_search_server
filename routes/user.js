@@ -6,11 +6,15 @@ var graphDB = require('../lib/graphDatabase');
 router.post('/:username', function (req, res, next) {
   var username = req.params.username;
 
-  graphDB.addUser(username, function (error) {
+  graphDB.addUser(username, function (error, status) {
     if (error) {
-      res.send(500);
+      res.sendStatus(500);
     } else {
-      res.send(201);
+      if(status === "exists") {
+        res.sendStatus(200);
+      } else if(status === "created") {
+        res.sendStatus(201);
+      }
     }
   });
 });
@@ -20,9 +24,9 @@ router.delete('/:username', function (req, res, next) {
 
   graphDB.deleteUser(username, function (error) {
     if (error) {
-      res.send(500);
+      res.sendStatus(500);
     } else {
-      res.send(204);
+      res.sendStatus(204);
     }
   });
 });
