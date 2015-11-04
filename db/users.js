@@ -7,7 +7,9 @@ var Schema = mongoose.Schema,
 
 var Users = new Schema({
     nodeid: Number,
-    username: String
+    userid: Number,
+    text: String,
+    isUser: String
 });
 
 var usersTable = mongoose.model('Users', Users);
