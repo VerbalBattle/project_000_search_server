@@ -3,13 +3,15 @@ var router = express.Router();
 var graphDB = require('../lib/graphDatabase');
 
 /* POST index page. */
-router.post('/:searchterm', function (req, res, next) {
-  var partialSearchTerm = req.params.searchterm;
+router.post('/', function (req, res, next) {
+  var params = req.body;
+  var partialSearchTerm = params.searchterm;
+  var shortSearch = params.shortsearch;
 
   if (partialSearchTerm === 'newuser' || partialSearchTerm === 'users') {
     res.send('quit trolling us please');
   } else {
-    graphDB.getSuggestions(partialSearchTerm, function (error, suggestions) {
+    graphDB.getSuggestions(partialSearchTerm, shortSearch, function (error, suggestions) {
       if(error) {
         res.send(error);
       } else {

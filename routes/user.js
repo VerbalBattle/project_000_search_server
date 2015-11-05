@@ -4,9 +4,9 @@ var graphDB = require('../lib/graphDatabase');
 
 /* POST /newuser */
 router.post('/:username', function (req, res, next) {
-  var username = req.params.username;
+  var user = req.body.user;
 
-  graphDB.addUser(username, function (error, status) {
+  graphDB.addUser(user, function (error, status) {
     if (error) {
       res.sendStatus(500);
     } else {
