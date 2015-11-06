@@ -3,8 +3,8 @@ var router = express.Router();
 var graphDB = require('../lib/graphDatabase');
 
 /* POST /newuser */
-router.post('/:username', function (req, res, next) {
-  var user = req.body.user;
+router.post('/', function (req, res, next) {
+  var user = JSON.parse(req.body.user);
 
   graphDB.addUser(user, function (error, status) {
     if (error) {
@@ -22,8 +22,8 @@ router.post('/:username', function (req, res, next) {
 router.delete('/:username', function (req, res, next) {
   var username = req.params.username;
 
-  graphDB.deleteUser(username, function (error) {
-    if (error) {
+  graphDB.deleteUser(username, function (status) {
+    if (status === "error") {
       res.sendStatus(500);
     } else {
       res.sendStatus(204);
